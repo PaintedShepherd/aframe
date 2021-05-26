@@ -1,3 +1,5 @@
+/*ILL Custom AFrame Fork*/
+
 /* global ImageData, URL */
 var registerComponent = require('../../core/component').registerComponent;
 var THREE = require('../../lib/three');
@@ -169,31 +171,31 @@ module.exports.Component = registerComponent('screenshot', {
    * Maintained for backwards compatibility.
    */
   capture: function (projection) {
-    var isVREnabled = this.el.renderer.xr.enabled;
+    var isVREnabled = this.el.renderer.vr.enabled;
     var renderer = this.el.renderer;
     var params;
     // Disable VR.
-    renderer.xr.enabled = false;
+    renderer.vr.enabled = false;
     params = this.setCapture(projection);
     this.renderCapture(params.camera, params.size, params.projection);
     // Trigger file download.
     this.saveCapture();
     // Restore VR.
-    renderer.xr.enabled = isVREnabled;
+    renderer.vr.enabled = isVREnabled;
   },
 
   /**
    * Return canvas instead of triggering download (e.g., for uploading blob to server).
    */
   getCanvas: function (projection) {
-    var isVREnabled = this.el.renderer.xr.enabled;
+    var isVREnabled = this.el.renderer.vr.enabled;
     var renderer = this.el.renderer;
     // Disable VR.
     var params = this.setCapture(projection);
-    renderer.xr.enabled = false;
+    renderer.vr.enabled = false;
     this.renderCapture(params.camera, params.size, params.projection);
     // Restore VR.
-    renderer.xr.enabled = isVREnabled;
+    renderer.vr.enabled = isVREnabled;
     return this.canvas;
   },
 
